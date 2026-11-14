@@ -1,0 +1,6 @@
+﻿Planner: rule-baseline
+
+Status: refused   Confidence: 0.00   Revisions: 0
+PawPal+ only plans pet care. Tell me about your pets (species, age, any health conditions) and when you're busy, and I'll draft a care schedule.
+
+Trace saved to logs\traces\run-20261114-152856-445008.json

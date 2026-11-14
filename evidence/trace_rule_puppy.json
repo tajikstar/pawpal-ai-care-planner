@@ -1,0 +1,273 @@
+{
+  "planner": "rule-baseline",
+  "input": "I just adopted a 4-month-old puppy named Biscuit and I work 9 to 5.",
+  "status": "planned",
+  "confidence": 0.98,
+  "revisions": 1,
+  "steps": [
+    {
+      "step": "screen",
+      "detail": "status=ok flags=[]",
+      "message": ""
+    },
+    {
+      "step": "parse",
+      "detail": "1 pet(s), busy=[['09:00', '17:00']]",
+      "request": {
+        "pets": [
+          {
+            "name": "Biscuit",
+            "species": "dog",
+            "age_years": 0.3333333333333333,
+            "conditions": []
+          }
+        ],
+        "busy_windows": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "notes": ""
+      }
+    },
+    {
+      "step": "retrieve",
+      "detail": "Biscuit: [('dog-puppy#exercise-and-play', 0.469), ('dog-puppy#feeding', 0.42), ('dog-puppy#potty-training', 0.284), ('dog-puppy#training-and-socialization', 0.25), ('dog-puppy#vet-care', 0.25), ('dog-adult#feeding', 0.08)]"
+    },
+    {
+      "step": "draft",
+      "detail": "8 task(s) proposed",
+      "tasks": [
+        {
+          "pet": "Biscuit",
+          "description": "Breakfast",
+          "time": "07:00",
+          "frequency": "daily",
+          "source": "dog-puppy",
+          "reason": "puppies need several small meals a day"
+        },
+        {
+          "pet": "Biscuit",
+          "description": "Potty break after breakfast",
+          "time": "07:20",
+          "frequency": "daily",
+          "source": "dog-puppy",
+          "reason": "puppies need a break after every meal"
+        },
+        {
+          "pet": "Biscuit",
+          "description": "Midday meal",
+          "time": "12:00",
+          "frequency": "daily",
+          "source": "dog-puppy",
+          "reason": "puppies under six months eat three to four meals a day"
+        },
+        {
+          "pet": "Biscuit",
+          "description": "Midday potty break",
+          "time": "12:20",
+          "frequency": "daily",
+          "source": "dog-puppy",
+          "reason": "young puppies cannot hold it all day"
+        },
+        {
+          "pet": "Biscuit",
+          "description": "Dinner",
+          "time": "17:30",
+          "frequency": "daily",
+          "source": "dog-puppy",
+          "reason": "puppies need several small meals a day"
+        },
+        {
+          "pet": "Biscuit",
+          "description": "Short walk and play",
+          "time": "18:00",
+          "frequency": "daily",
+          "source": "dog-puppy",
+          "reason": "short sessions suit growing joints"
+        },
+        {
+          "pet": "Biscuit",
+          "description": "Training session (5 minutes)",
+          "time": "18:30",
+          "frequency": "daily",
+          "source": "dog-puppy",
+          "reason": "short positive sessions work best"
+        },
+        {
+          "pet": "Biscuit",
+          "description": "Last potty break before bed",
+          "time": "21:30",
+          "frequency": "daily",
+          "source": "dog-puppy",
+          "reason": "a break before bed helps house training"
+        }
+      ]
+    },
+    {
+      "step": "verify",
+      "detail": "2 error(s) ['during_busy_hours'], 0 warning(s)",
+      "issues": [
+        {
+          "level": "error",
+          "code": "during_busy_hours",
+          "message": "12:00 is during the owner's busy hours (09:00-17:00).",
+          "task_index": 2
+        },
+        {
+          "level": "error",
+          "code": "during_busy_hours",
+          "message": "12:20 is during the owner's busy hours (09:00-17:00).",
+          "task_index": 3
+        }
+      ]
+    },
+    {
+      "step": "revise",
+      "detail": "attempt 1: 8 task(s)",
+      "tasks": [
+        {
+          "pet": "Biscuit",
+          "description": "Breakfast",
+          "time": "07:00",
+          "frequency": "daily",
+          "source": "dog-puppy",
+          "reason": "puppies need several small meals a day"
+        },
+        {
+          "pet": "Biscuit",
+          "description": "Potty break after breakfast",
+          "time": "07:20",
+          "frequency": "daily",
+          "source": "dog-puppy",
+          "reason": "puppies need a break after every meal"
+        },
+        {
+          "pet": "Biscuit",
+          "description": "Midday meal",
+          "time": "08:50",
+          "frequency": "daily",
+          "source": "dog-puppy",
+          "reason": "puppies under six months eat three to four meals a day"
+        },
+        {
+          "pet": "Biscuit",
+          "description": "Midday potty break",
+          "time": "08:40",
+          "frequency": "daily",
+          "source": "dog-puppy",
+          "reason": "young puppies cannot hold it all day"
+        },
+        {
+          "pet": "Biscuit",
+          "description": "Dinner",
+          "time": "17:30",
+          "frequency": "daily",
+          "source": "dog-puppy",
+          "reason": "puppies need several small meals a day"
+        },
+        {
+          "pet": "Biscuit",
+          "description": "Short walk and play",
+          "time": "18:00",
+          "frequency": "daily",
+          "source": "dog-puppy",
+          "reason": "short sessions suit growing joints"
+        },
+        {
+          "pet": "Biscuit",
+          "description": "Training session (5 minutes)",
+          "time": "18:30",
+          "frequency": "daily",
+          "source": "dog-puppy",
+          "reason": "short positive sessions work best"
+        },
+        {
+          "pet": "Biscuit",
+          "description": "Last potty break before bed",
+          "time": "21:30",
+          "frequency": "daily",
+          "source": "dog-puppy",
+          "reason": "a break before bed helps house training"
+        }
+      ]
+    },
+    {
+      "step": "verify",
+      "detail": "all checks passed",
+      "issues": []
+    },
+    {
+      "step": "finalize",
+      "detail": "status=planned kept=8 rejected=0 confidence=0.98"
+    }
+  ],
+  "final_tasks": [
+    {
+      "pet": "Biscuit",
+      "description": "Breakfast",
+      "time": "07:00",
+      "frequency": "daily",
+      "source": "dog-puppy",
+      "reason": "puppies need several small meals a day"
+    },
+    {
+      "pet": "Biscuit",
+      "description": "Potty break after breakfast",
+      "time": "07:20",
+      "frequency": "daily",
+      "source": "dog-puppy",
+      "reason": "puppies need a break after every meal"
+    },
+    {
+      "pet": "Biscuit",
+      "description": "Midday meal",
+      "time": "08:50",
+      "frequency": "daily",
+      "source": "dog-puppy",
+      "reason": "puppies under six months eat three to four meals a day"
+    },
+    {
+      "pet": "Biscuit",
+      "description": "Midday potty break",
+      "time": "08:40",
+      "frequency": "daily",
+      "source": "dog-puppy",
+      "reason": "young puppies cannot hold it all day"
+    },
+    {
+      "pet": "Biscuit",
+      "description": "Dinner",
+      "time": "17:30",
+      "frequency": "daily",
+      "source": "dog-puppy",
+      "reason": "puppies need several small meals a day"
+    },
+    {
+      "pet": "Biscuit",
+      "description": "Short walk and play",
+      "time": "18:00",
+      "frequency": "daily",
+      "source": "dog-puppy",
+      "reason": "short sessions suit growing joints"
+    },
+    {
+      "pet": "Biscuit",
+      "description": "Training session (5 minutes)",
+      "time": "18:30",
+      "frequency": "daily",
+      "source": "dog-puppy",
+      "reason": "short positive sessions work best"
+    },
+    {
+      "pet": "Biscuit",
+      "description": "Last potty break before bed",
+      "time": "21:30",
+      "frequency": "daily",
+      "source": "dog-puppy",
+      "reason": "a break before bed helps house training"
+    }
+  ],
+  "rejected": []
+}

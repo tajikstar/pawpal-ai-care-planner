@@ -1,0 +1,24 @@
+﻿Planner: rule-baseline
+
+Status: planned   Confidence: 0.96   Revisions: 0
+Drafted 6 task(s) for Cat 1.
+Note: Medication and dosing questions have to be answered by your vet. PawPal+ can remind you to give a medication at the time your vet set, but it will never suggest a drug or a dose.
+
+Proposed tasks (all passed the guardrail checks):
+  #  Pet       Time   Repeats  Task                                                Source
+  1  Cat 1     07:00  daily    Breakfast                                           cat-adult
+  2  Cat 1     18:00  daily    Dinner                                              cat-adult
+  3  Cat 1     19:00  daily    Play session with wand toy                          cat-adult
+  4  Cat 1     20:00  daily    Scoop litter box                                    cat-adult
+  5  Cat 1     07:10  daily    Refresh water bowl                                  cat-adult
+  6  Cat 1     10:00  weekly   Brush coat                                          cat-adult
+
+Trace saved to logs\traces\run-20261114-152856-215783.json
+
+Added 6 approved task(s) to Jordan's PawPal+ schedule:
+  07:00  Cat 1     Breakfast (daily)
+  07:10  Cat 1     Refresh water bowl (daily)
+  10:00  Cat 1     Brush coat (weekly)
+  18:00  Cat 1     Dinner (daily)
+  19:00  Cat 1     Play session with wand toy (daily)
+  20:00  Cat 1     Scoop litter box (daily)

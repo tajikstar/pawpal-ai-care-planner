@@ -1,0 +1,34 @@
+flowchart TD
+    U([Pet owner]) -->|"plain-English request<br/>(pets, ages, health, busy hours)"| UI["Streamlit app (app.py)<br/>or CLI (planner.py)"]
+    UI --> G1{"Input guardrail<br/>check_request()"}
+    G1 -->|"empty / off-topic"| R1[/"Polite refusal"/]
+    G1 -->|"emergency words"| R2[/"Call your vet +<br/>ASPCA Poison Control"/]
+    G1 -->|"ok (medication question flagged)"| P
+
+    subgraph AGENT["CarePlannerAgent (pawpal_ai/agent.py)"]
+        P["1 Parse<br/>planner.parse_request()<br/>pets, life stage, busy windows"] --> RET
+        RET["2 Retrieve<br/>KnowledgeBase.retrieve()<br/>TF-IDF + species / life-stage filter"] --> D
+        D["3 Draft<br/>planner.draft_plan()<br/>uses ONLY retrieved excerpts, cites ids"] --> V
+        V{"4 Verify<br/>validate_plan()"} -->|"errors and < 2 revisions"| REV["5 Revise<br/>planner.revise_plan(errors)"]
+        REV --> V
+        V -->|"passed, or out of revisions"| F["6 Finalize<br/>drop failing tasks,<br/>confidence score"]
+    end
+
+    KB[("knowledge/*.md<br/>ASPCA / AVMA-based guides")] --> RET
+    LLM["Planner backend<br/>GeminiPlanner (AI, main) /<br/>ClaudePlanner (AI, optional) /<br/>RulePlanner (offline baseline)"] -.-> P
+    LLM -.-> D
+    LLM -.-> REV
+    SCH["Original PawPal+ Scheduler<br/>check_conflicts()"] --> V
+
+    F --> H{"Human in the loop<br/>owner approves / unticks<br/>each task"}
+    H -->|approved| APPLY["apply_plan() -> Owner / Pet / Task"]
+    APPLY --> OUT[/"Sorted schedule +<br/>conflict warnings"/]
+
+    AGENT -.->|"every step"| LOG[("logs/pawpal_ai.log<br/>logs/traces/*.json")]
+
+    subgraph TESTING["Reliability testing"]
+        T1["pytest: 17 original + AI tests<br/>(scripted fake planner, no API key)"]
+        T2["evaluate.py: 10 fixed cases<br/>pass/fail + confidence"]
+    end
+    T1 -.-> AGENT
+    T2 -.-> AGENT

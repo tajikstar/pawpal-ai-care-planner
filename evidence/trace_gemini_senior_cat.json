@@ -1,0 +1,155 @@
+{
+  "planner": "gemini",
+  "input": "My cat Luna is 14 and has kidney disease. I'm busy 8am to 6pm.",
+  "status": "planned",
+  "confidence": 1.0,
+  "revisions": 0,
+  "steps": [
+    {
+      "step": "screen",
+      "detail": "status=ok flags=[]",
+      "message": ""
+    },
+    {
+      "step": "parse",
+      "detail": "1 pet(s), busy=[['08:00', '18:00']]",
+      "request": {
+        "pets": [
+          {
+            "name": "Luna",
+            "species": "cat",
+            "age_years": 14,
+            "conditions": [
+              "kidney disease"
+            ]
+          }
+        ],
+        "busy_windows": [
+          [
+            "08:00",
+            "18:00"
+          ]
+        ],
+        "notes": ""
+      }
+    },
+    {
+      "step": "retrieve",
+      "detail": "Luna: [('cat-senior#health-checks', 0.54), ('cat-senior#kidney-health-and-water', 0.507), ('cat-senior#feeding', 0.386), ('cat-senior#comfort-and-mobility', 0.365), ('vet-safety#medication-safety', 0.404), ('vet-safety#emergencies', 0.092)]"
+    },
+    {
+      "step": "draft",
+      "detail": "6 task(s) proposed",
+      "tasks": [
+        {
+          "pet": "Luna",
+          "description": "Provide fresh water in multiple easy-to-reach locations",
+          "time": "06:30",
+          "frequency": "daily",
+          "source": "cat-senior#kidney-health-and-water",
+          "reason": "Cats with kidney disease drink and urinate more; keeping fresh water accessible in several spots encourages drinking."
+        },
+        {
+          "pet": "Luna",
+          "description": "Serve a small morning meal and monitor appetite",
+          "time": "07:00",
+          "frequency": "daily",
+          "source": "cat-senior#feeding",
+          "reason": "Senior cats often eat better with smaller, more frequent meals, and tracking appetite helps detect health changes."
+        },
+        {
+          "pet": "Luna",
+          "description": "Serve an evening meal and observe food intake",
+          "time": "18:15",
+          "frequency": "daily",
+          "source": "cat-senior#feeding",
+          "reason": "Providing smaller, frequent feedings accommodates senior cat eating habits and allows monitoring of appetite."
+        },
+        {
+          "pet": "Luna",
+          "description": "Refresh water stations to ensure clean water is continuously available",
+          "time": "19:00",
+          "frequency": "daily",
+          "source": "cat-senior#kidney-health-and-water",
+          "reason": "Maintaining accessible fresh water in multiple spots promotes essential hydration for cats with kidney disease."
+        },
+        {
+          "pet": "Luna",
+          "description": "Inspect low-sided litter box access and soft bedding",
+          "time": "20:00",
+          "frequency": "daily",
+          "source": "cat-senior#comfort-and-mobility",
+          "reason": "Older cats may struggle with tall litter boxes or high surfaces; low-sided boxes and soft bedding support comfort and mobility."
+        },
+        {
+          "pet": "Luna",
+          "description": "Weigh Luna and record weight",
+          "time": "20:30",
+          "frequency": "weekly",
+          "source": "cat-senior#feeding",
+          "reason": "Tracking weight helps identify weight loss or changes in condition to report to the veterinarian."
+        }
+      ]
+    },
+    {
+      "step": "verify",
+      "detail": "all checks passed",
+      "issues": []
+    },
+    {
+      "step": "finalize",
+      "detail": "status=planned kept=6 rejected=0 confidence=1.0"
+    }
+  ],
+  "final_tasks": [
+    {
+      "pet": "Luna",
+      "description": "Provide fresh water in multiple easy-to-reach locations",
+      "time": "06:30",
+      "frequency": "daily",
+      "source": "cat-senior#kidney-health-and-water",
+      "reason": "Cats with kidney disease drink and urinate more; keeping fresh water accessible in several spots encourages drinking."
+    },
+    {
+      "pet": "Luna",
+      "description": "Serve a small morning meal and monitor appetite",
+      "time": "07:00",
+      "frequency": "daily",
+      "source": "cat-senior#feeding",
+      "reason": "Senior cats often eat better with smaller, more frequent meals, and tracking appetite helps detect health changes."
+    },
+    {
+      "pet": "Luna",
+      "description": "Serve an evening meal and observe food intake",
+      "time": "18:15",
+      "frequency": "daily",
+      "source": "cat-senior#feeding",
+      "reason": "Providing smaller, frequent feedings accommodates senior cat eating habits and allows monitoring of appetite."
+    },
+    {
+      "pet": "Luna",
+      "description": "Refresh water stations to ensure clean water is continuously available",
+      "time": "19:00",
+      "frequency": "daily",
+      "source": "cat-senior#kidney-health-and-water",
+      "reason": "Maintaining accessible fresh water in multiple spots promotes essential hydration for cats with kidney disease."
+    },
+    {
+      "pet": "Luna",
+      "description": "Inspect low-sided litter box access and soft bedding",
+      "time": "20:00",
+      "frequency": "daily",
+      "source": "cat-senior#comfort-and-mobility",
+      "reason": "Older cats may struggle with tall litter boxes or high surfaces; low-sided boxes and soft bedding support comfort and mobility."
+    },
+    {
+      "pet": "Luna",
+      "description": "Weigh Luna and record weight",
+      "time": "20:30",
+      "frequency": "weekly",
+      "source": "cat-senior#feeding",
+      "reason": "Tracking weight helps identify weight loss or changes in condition to report to the veterinarian."
+    }
+  ],
+  "rejected": []
+}

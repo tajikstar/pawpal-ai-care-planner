@@ -1,0 +1,6 @@
+﻿Planner: rule-baseline
+
+Status: emergency   Confidence: 0.00   Revisions: 0
+This sounds like it could be an emergency. PawPal+ can't help with that: please contact your veterinarian or an emergency animal hospital now. For suspected poisoning, call the ASPCA Animal Poison Control Center at (888) 426-4435.
+
+Trace saved to logs\traces\run-20261114-152757-747665.json
