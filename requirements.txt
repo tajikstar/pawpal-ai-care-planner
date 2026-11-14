@@ -1,2 +1,7 @@
 streamlit>=1.30
 pytest>=7.0
+anthropic>=1.0.0
+google-genai>=1.0.0
+python-dotenv>=1.0.0
+# CA bundle used by the SDKs' HTTPS calls; pinned past revoked intermediates.
+certifi>=2026.10.19

@@ -1,6 +1,14 @@
-import streamlit as st
+import os
 
+import streamlit as st
+from dotenv import load_dotenv
+
+from pawpal_ai.agent import CarePlannerAgent, apply_plan
+from pawpal_ai.planners import make_planner
+from pawpal_ai.retriever import KnowledgeBase
 from pawpal_system import Owner, Pet, Scheduler, Task
+
+load_dotenv()
 
 st.set_page_config(page_title="PawPal+", page_icon="🐾", layout="centered")
 
@@ -14,6 +22,72 @@ owner: Owner = st.session_state.owner
 
 st.subheader("Owner")
 owner.name = st.text_input("Owner name", value=owner.name)
+
+st.divider()
+
+# ---------------------------------------------------------------------------
+# AI Care Planner: the agent drafts tasks, the owner approves them.
+# ---------------------------------------------------------------------------
+st.subheader("🤖 AI Care Planner")
+st.caption("Describe your pets and your day. PawPal+ looks up its pet-care guides, drafts a schedule, "
+           "checks it, and lets you approve each task before anything is added.")
+
+PLANNER_LABELS = {"claude": "Claude (RAG agent)", "gemini": "Gemini (RAG agent)", "rule": "Offline baseline (no AI)"}
+options = [k for k, env in (("gemini", "GEMINI_API_KEY"), ("claude", "ANTHROPIC_API_KEY")) if os.getenv(env)]
+options.append("rule")
+planner_kind = st.radio(
+    "Planner", options, horizontal=True, format_func=PLANNER_LABELS.get,
+    help="Add GEMINI_API_KEY (or ANTHROPIC_API_KEY) to .env to enable an AI planner.",
+)
+
+with st.form("ai_plan_form"):
+    request_text = st.text_area(
+        "Your pets and schedule",
+        placeholder="I just adopted a 4-month-old puppy named Biscuit and I work 9 to 5.",
+    )
+    if st.form_submit_button("Draft a care plan"):
+        kb = KnowledgeBase.load()
+        try:
+            agent = CarePlannerAgent(make_planner(planner_kind, kb), kb)
+            with st.spinner("Retrieving guides, drafting and checking the plan..."):
+                st.session_state.ai_result = agent.run(request_text, existing_owner=owner)
+        except RuntimeError as exc:
+            st.error(str(exc))
+
+result = st.session_state.get("ai_result")
+if result is not None:
+    if result.status == "emergency":
+        st.error(result.message, icon="🚨")
+    elif result.status in ("refused", "no_pets", "unsupported_species", "error"):
+        st.warning(result.message)
+    else:
+        st.info(f"{result.message}  \n**Confidence:** {result.confidence:.2f} · "
+                f"**Revisions:** {result.revisions}")
+    for note in result.notes:
+        st.warning(note, icon="🩺")
+
+    if result.tasks:
+        st.write("**Proposed tasks** (each passed the safety checks; untick any you don't want):")
+        chosen = []
+        for i, task in enumerate(result.tasks):
+            label = f"{task.time} · {task.pet} · {task.description} ({task.frequency})"
+            if st.checkbox(label, value=True, key=f"ai_task_{i}_{result.trace_path}"):
+                chosen.append(task)
+            st.caption(f"↳ {task.reason} — source: `{task.source}`")
+        for w in result.warnings:
+            st.warning(w.message, icon="⚠️")
+        if result.rejected:
+            with st.expander(f"{len(result.rejected)} task(s) left out by the guardrails"):
+                for r in result.rejected:
+                    st.write(f"- {r['task']['pet']} {r['task']['time']} {r['task']['description']}: "
+                             f"{'; '.join(r['issues'])}")
+        if st.button(f"Add {len(chosen)} approved task(s) to my schedule", type="primary"):
+            added = apply_plan(owner, result.request, chosen)
+            st.session_state.ai_result = None
+            st.toast(f"Added {added} task(s).")
+            st.rerun()
+    if result.trace_path:
+        st.caption(f"Agent trace: `{result.trace_path}`")
 
 st.divider()
 
