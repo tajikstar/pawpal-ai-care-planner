@@ -252,6 +252,6 @@ ai_interactions.md     agent reasoning traces
 
 - Code: https://github.com/tajikstar/pawpal-ai-care-planner
 - Demo video: _TODO: Loom link (optional)_
-- **What this project says about me as an AI engineer:** _TODO: your own short paragraph._
+- **What this project says about me as an AI engineer:** I can take a working project and turn it into a real AI application without breaking what already worked. PawPal+ started as a manual pet-task scheduler. I added an AI planner on top of it, but I kept the original `Scheduler` and its 17 tests and reused its conflict checks inside the new agent. The AI suggests a plan, my code checks it, and the owner approves it, so the old system and the new one work together.
 
 > ⚠️ PawPal+ gives general care routines, not veterinary advice. Always follow your veterinarian's guidance.
